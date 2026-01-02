@@ -20,24 +20,19 @@ class unetUp(nn.Module):
 class CA_Block(nn.Module):
     def __init__(self, channel, h, w, reduction=3):
         super(CA_Block, self).__init__()
-
         self.h = h
         self.w = w
-
         self.avg_pool_x = nn.AdaptiveAvgPool2d((h, 1))
         self.avg_pool_y = nn.AdaptiveAvgPool2d((1, w))
 
         self.conv_1x1 = nn.Conv2d(in_channels=channel, out_channels=channel // reduction, kernel_size=1, stride=1,
                                   bias=False)
-
         self.relu = nn.ReLU()
         self.bn = nn.BatchNorm2d(channel // reduction)
-
         self.F_h = nn.Conv2d(in_channels=channel // reduction, out_channels=channel, kernel_size=1, stride=1,
                              bias=False)
         self.F_w = nn.Conv2d(in_channels=channel // reduction, out_channels=channel, kernel_size=1, stride=1,
                              bias=False)
-
         self.sigmoid_h = nn.Sigmoid()
         self.sigmoid_w = nn.Sigmoid()
 
@@ -46,14 +41,12 @@ class CA_Block(nn.Module):
         x_w = self.avg_pool_y(x)
 
         x_cat_conv_relu = self.relu(self.conv_1x1(torch.cat((x_h, x_w), 3)))
-
         x_cat_conv_split_h, x_cat_conv_split_w = x_cat_conv_relu.split([self.h, self.w], 3)
 
         s_h = self.sigmoid_h(self.F_h(x_cat_conv_split_h.permute(0, 1, 3, 2)))
         s_w = self.sigmoid_w(self.F_w(x_cat_conv_split_w))
 
         out = x * s_h.expand_as(x) * s_w.expand_as(x)
-
         return out
 
 
@@ -63,7 +56,7 @@ class Unet(nn.Module):
         self.vgg = vgg16(pretrained=pretrained)
         del self.vgg.classifier
         in_filters = [192, 384, 768, 1024]
-        out_filters = [64, 128, 256, 512]  # 每一次up
+        out_filters = [64, 128, 256, 512]
         # upsampling
         # 64,64,512
         self.up_concat4 = unetUp(in_filters[3], out_filters[3])
@@ -71,7 +64,7 @@ class Unet(nn.Module):
         self.up_concat3 = unetUp(in_filters[2], out_filters[2])
         # 256,256,128
         self.up_concat2 = unetUp(in_filters[1], out_filters[1])
-        # 512,512,64  （最终有效特征层）
+        # 512,512,64
         self.up_concat1 = unetUp(in_filters[0], out_filters[0])
 
         #   official Coord Attention
@@ -87,7 +80,7 @@ class Unet(nn.Module):
         self.backbone_type = 'vgg'
         self.output_downsample = 1
 
-        #   载入已有权重
+        #   load existing weight
         if model_path is not None:
             self.load_state_dict(torch.load(model_path))
 
@@ -106,21 +99,9 @@ class Unet(nn.Module):
 
         return final
 
-    #   也不知道怎么调用它，算了不管了
-    def _initialize_weights(self, *stages):
-        for modules in stages:
-            for module in modules.modules():
-                if isinstance(module, nn.Conv2d):
-                    nn.init.kaiming_normal_(module.weight)
-                    if module.bias is not None:
-                        module.bias.data.zero_()
-                elif isinstance(module, nn.BatchNorm2d):
-                    module.weight.data.fill_(1)
-                    module.bias.data.zero_()
 
-
-#   CA block的官方实现
-#   https://github.com/Andrew-Qibin/CoordAttention/blob/main/coordatt.py
+#   Official CoordAtt implementation
+#   See: https://github.com/Andrew-Qibin/CoordAttention/blob/main/coordatt.py
 class h_sigmoid(nn.Module):
     def __init__(self, inplace=True):
         super(h_sigmoid, self).__init__()
