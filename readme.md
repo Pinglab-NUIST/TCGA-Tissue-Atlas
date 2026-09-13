@@ -4,7 +4,7 @@ Resources for the CENTRAL study: **A comprehensive computational pathology atlas
 
 This repository provides the TUZI tissue segmentation model (previously called the General Base Model), precomputed tissue maps and tumor maps, and tissueomic descriptors for downstream research.
 
-[Interactive WSI demo](https://wish.pinglab-nuist.org/wsi-preview/) · [All releases](https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas/releases) · [License](License)
+[All releases](https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas/releases) · [License](License)
 
 ## Choose a resource
 
@@ -151,4 +151,4 @@ Please cite **A comprehensive computational pathology atlas for multi-cancer tum
 
 Project-owned resources in this repository and the descriptor asset released under `tissueomic-descriptors-v1` are provided under the [TCGA-Tissue-Atlas Noncommercial Research License v1.0](License). Free noncommercial research includes model training, fine-tuning, distillation, and development of alternative research models. Commercial use, including commercial product development and commercial use of resulting technical artifacts, requires prior written authorization. Third-party assets and original TCGA/GDC data retain their applicable terms; this notice does not revoke any previously validly granted rights. Consult the specific release notices for external assets.
 
-For licensing requests, contact **ping@nuist.edu.cn**. For questions about files, loading, or interpretation, please [open an issue](https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas/issues) and include the release tag, asset filename, and relevant error message or case/slide identifier.
+For licensing requests, contact **ping@nuist.edu.cn**.
