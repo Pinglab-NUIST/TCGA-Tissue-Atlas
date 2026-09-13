@@ -1,0 +1,101 @@
+# TCGA-Tissue-Atlas Noncommercial Research License
+
+Version 1.0 - 13 September 2026
+
+Licensor: Yiping Jiao
+
+Project: TCGA-Tissue-Atlas (including CENTRAL and TUZI)
+
+Project repository: https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas
+
+Licensing contact: ping@nuist.edu.cn
+
+## 1. Scope and definitions
+
+"Materials" means the project-owned code, documentation, tissue atlases, segmentation masks, tumor maps, annotations, model weights, and related assets in this repository, except items identified as separately licensed or third-party materials, together with external assets expressly distributed under this License. Linked downloads are covered only where the download or accompanying notice expressly applies this License. Separately licensed components and third-party materials are excluded.
+
+"You" means the individual or legal entity exercising permissions under this License. An individual acting for an entity must have authority to accept these terms for that entity.
+
+"Research Artifacts" means modifications of the Materials and technical assets generated using them, including predictions, masks, pseudo-labels, extracted features, synthetic training datasets, and models trained, fine-tuned, adapted, distilled, or extracted using the Materials or such assets. This definition describes the agreed scope of use; it does not assert that every Research Artifact is a derivative work under copyright law.
+
+"Noncommercial Research" means scientific research, education, reproduction, verification, and methodological evaluation that is not directed toward developing, improving, validating, delivering, or operating a commercial product or service, and is not otherwise primarily intended for commercial advantage or monetary compensation.
+
+"Commercial Use" includes selling or commercially licensing the Materials or Research Artifacts; incorporating them into commercial products or services; providing paid analyses or hosted services using them; and research, prototyping, training, fine-tuning, distillation, extraction, testing, benchmarking, or validation directed toward developing or improving commercial products or services. Commercial Use includes these activities before any product launch or revenue is generated and whether performed directly, through a contractor, or through an academic collaboration.
+
+Use is assessed by its purpose and context, not solely by the user's institutional status. Academic affiliation, publication of results, or describing an activity as research does not make product-directed research noncommercial. Conversely, employment by a company or corporate funding alone does not establish Commercial Use where the activity is independent Noncommercial Research and does not provide product-development work or commercial deliverables.
+
+## 2. Free research permission
+
+Subject to this License, the Licensor grants You a worldwide, non-exclusive, royalty-free permission under the copyright and database rights the Licensor is authorized to grant to access, reproduce, run, study, modify, and redistribute the Materials for Noncommercial Research, and to create, use, and share Research Artifacts for that purpose.
+
+No individual application, prior approval, collaboration, or fee is required for permitted Noncommercial Research. In particular, You may:
+
+- Analyze and visualize the atlases and tumor maps and reproduce published results.
+- Run the models on Your own research data.
+- Use masks, annotations, predictions, features, and other outputs as training data or supervision.
+- Train or fine-tune downstream models, including prognostic and treatment-response models.
+- Develop alternative or competing research models, including tissue-segmentation models, through training, domain adaptation, distillation, model extraction, or large-scale pseudo-label generation.
+- Evaluate, compare, and criticize the Materials and publish favorable or unfavorable findings.
+- Publish and share research models and datasets subject to Section 5.
+
+These permissions do not authorize bypassing access controls or accessing data or services without permission. Any separate service terms must be satisfied for access to an online service.
+
+## 3. Commercial permission required
+
+Commercial Use of the Materials or Research Artifacts requires prior written authorization from the Licensor or its authorized representative. An inquiry, acknowledgment of an inquiry, citation, or absence of a response is not authorization.
+
+As a condition of the research permission, You agree not to use Research Artifacts for Commercial Use without that authorization, including where an artifact does not reproduce any original code or model weights. This use undertaking applies to research-trained and distilled models and their subsequent modifications or further trained versions that use those artifacts.
+
+Permitted research does not become a past violation merely because a later opportunity for commercialization arises. However, authorization must be obtained before beginning product-directed development, commercial transfer, deployment, or any other Commercial Use of the Materials or Research Artifacts. Free distribution of a research model does not itself authorize its commercial reuse by recipients.
+
+This License does not claim ownership of Your original contributions, scientific discoveries, or independent work. It does not restrict independent implementations made without using the Materials or Research Artifacts merely because they address similar tasks or use ideas described in a publication. It does not impose a commercial licensing obligation merely for reading, citing, or applying general scientific conclusions from a paper.
+
+## 4. Publications and citation; no authorship requirement
+
+You may publish research results, quantitative summaries, model comparisons, and reasonable illustrative excerpts or modified visualizations of the Materials in papers, theses, presentations, and educational materials. When a research output materially uses or relies on the Materials, cite the following paper in a manner appropriate to the medium and scholarly practice:
+
+"A comprehensive computational pathology atlas for multi-cancer tumor microenvironment characterization and prognosis prediction."
+
+DOI: https://doi.org/10.1038/s41746-026-03181-5
+
+For redistributed technical assets, provide the project repository link, applicable version or commit where available, and the citation in the accompanying documentation. Identify substantial changes so modified resources are not mistaken for the original release.
+
+This License does not require listing the Licensor or any project contributor as a co-author, obtaining their approval of a publication, adding a separate personal acknowledgment, or implying their endorsement. Ordinary scholarly authorship criteria remain independent of this License.
+
+Publication through a commercial scholarly publisher, payment of an article-processing charge, ordinary publisher distribution of an article, or receipt of an academic salary does not by itself constitute Commercial Use. The Licensor permits the reasonable illustrative excerpts described above to be reproduced and distributed as part of such publications and their ordinary dissemination. This permission does not extend to supplying substantial datasets, model weights, or software as unrestricted supplementary assets; those assets remain subject to Section 5. Clearly identify third-party licensed content when a publication otherwise carries a broader license.
+
+## 5. Sharing and downstream terms
+
+When sharing the Materials, include this License, preserve existing copyright and license notices, and identify modifications. Recipients receive permission to use the Materials directly from the Licensor under this License; You may not grant commercial rights to the Materials on the Licensor's behalf.
+
+When sharing Research Artifacts as technical assets, include a notice of their provenance, a copy of this License, and an express condition that recipients may use and further share them only for Noncommercial Research unless separately authorized by the Licensor for Commercial Use. Require recipients to preserve and pass on the same condition when they share those artifacts or further technical artifacts produced from them. This condition must be included in the terms under which the artifact is supplied, not solely as an optional citation request.
+
+You may identify Your ownership of new contributions, but must not supply Research Artifacts under terms that purport to permit their unrestricted commercial reuse. These requirements apply to the relevant assets, not automatically to unrelated files in the same repository, independently obtained data, or an entire publication. Section 4 governs ordinary publications and illustrative excerpts.
+
+There is no obligation to publish private research code, data, or model weights solely because You use the Materials. If You choose to share covered assets, the requirements above apply.
+
+## 6. Reserved and third-party rights
+
+This License grants only rights that the Licensor is authorized to grant. Original TCGA/GDC data, third-party code, pretrained components, and separately licensed assets retain their applicable terms. This License does not replace them or assert exclusive rights over underlying public-domain material or facts. No trademark or endorsement rights are granted, and no express patent license is granted.
+
+Nothing in this License restricts any use that applicable law permits without this permission, or overrides non-waivable statutory rights. Restrictions on Research Artifacts are intended to operate as agreed use conditions to the extent enforceable under applicable law, and do not create intellectual-property rights where none exist.
+
+## 7. Disclaimer and liability
+
+To the extent permitted by applicable law, the Materials are provided "AS IS," without warranties of any kind, including accuracy, fitness for a particular purpose, merchantability, or non-infringement. The Licensor undertakes no obligation to provide support, maintenance, or updates.
+
+To the extent permitted by applicable law, the Licensor and contributors shall not be liable for damages arising from use of or inability to use the Materials. Nothing excludes liability that cannot lawfully be excluded.
+
+## 8. Acceptance, term, and breach
+
+By exercising permissions offered under this License, You accept its conditions to the extent applicable law recognizes such acceptance. Where separate affirmative acceptance is used, that acceptance also records Your agreement to the use conditions.
+
+Permissions continue for the duration of the licensed rights while You comply. Later versions of this License do not replace the terms on copies already validly received under this version.
+
+Permissions terminate automatically upon breach. They are automatically reinstated if You cease the violating activity and cure the breach within 30 days after becoming aware of it; otherwise, reinstatement requires the Licensor's written consent. Reinstatement does not retroactively authorize Commercial Use or waive claims arising from a breach. Termination does not terminate the permission of downstream recipients who independently comply. Conditions governing retained Research Artifacts, reserved rights, and liability survive termination to the extent applicable.
+
+## 9. Separate agreements and interpretation
+
+The Licensor may grant additional permissions or enter into a separate commercial agreement. Any exception must expressly identify the authorized use and be issued by a person with authority to grant it. No provision requires the Licensor to offer commercial permission.
+
+If a provision is unenforceable, the remaining provisions continue to the extent permitted by applicable law. This is a custom research-use license, not a Creative Commons license or an OSI-approved open-source license.
