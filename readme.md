@@ -87,7 +87,7 @@ python minimal-example.py
 
 The current script first runs a random 512 × 512 tensor, then displays predictions for the three ROIs. It is a patch-level demonstration, not a complete whole-slide tiling/stitching pipeline. For analysis workflows, use `model.eval()` and `torch.no_grad()` when running inference. Checkpoint loading may require `map_location="cpu"` on CPU-only machines. The existing script is provided as-is; a complete dependency lockfile and end-to-end environment validation are not supplied here.
 
-Class channel indices and the visualization palette are not a substitute for a biological label dictionary. Consult the paper's supplementary materials for category definitions; do not infer tissue identity solely from display colors. The example references the [CoordAttention implementation](https://github.com/Andrew-Qibin/CoordAttention); third-party components retain their applicable terms.
+The [atlas label dictionary below](#tissue-categories-and-label-conventions) documents the original stored-map convention. Model channel indices and stored-map labels are different conventions: a 15-channel `argmax` returns `0..14`, whereas the original atlas documentation uses `1..15` for categories and reserves `0` for excluded regions. The example does not implement the full atlas export/foreground-masking procedure; do not apply the stored-map dictionary directly to its channel indices without verifying that conversion. Do not infer tissue identity solely from display colors. The example references the [CoordAttention implementation](https://github.com/Andrew-Qibin/CoordAttention); third-party components retain their applicable terms.
 
 ## Precomputed tissue maps
 
@@ -106,6 +106,51 @@ The release covers eight TCGA cohorts. Its release notes specify 15-category lab
 | STAD | [STAD.zip](https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas/releases/download/tissuemaps-general-base-model-v5/STAD.zip) | 420.0 |
 | UCEC | [UCEC.zip](https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas/releases/download/tissuemaps-general-base-model-v5/UCEC.zip) | 839.7 |
 
+### Tissue categories and label conventions
+
+The original [Pancancer-tissue-atlas documentation](https://github.com/jiaoyiping630/Pancancer-tissue-atlas) describes the tissue atlas as a single-channel label image with values `0..15`. Its category dictionary is reproduced here to explain the atlas and the example figures:
+
+| Original atlas value | Category |
+| --- | --- |
+| `0` | Regions excluded from analysis, including glass background, out-of-focus regions, marker-pen contamination, and tissue folds |
+| `1` | Background |
+| `2` | Lymphocytes or immune infiltration |
+| `3` | Necrosis |
+| `4` | Adipose |
+| `5` | Fibrous stroma |
+| `6` | Muscle |
+| `7` | Nerves |
+| `8` | Alveolar |
+| `9` | Cartilage |
+| `10` | Blood cells |
+| `11` | Micro-vessels |
+| `12` | Mucus or sediment |
+| `13` | Carbon deposition |
+| `14` | Epithelial-like tissue |
+| `15` | Artifacts |
+
+In this convention, `0` is the exclusion mask and `1` is the model's background category; they are not interchangeable. Likewise, the artifact category and the pre-excluded regions are distinct. The current tissue-map release notes specify 15 categories but do not independently enumerate their numeric IDs. The table preserves the documented original convention; verify the encoding of a specific downloaded map before using it as a class-index lookup. The separate model-output and tumor-map conventions are explained in their respective sections.
+
+### Tissue-map examples and palette
+
+These original COAD visualizations show two diagnostic slides from case `TCGA-3L-AA1B`. They are JPEG illustrations of the atlas, not the numerical label PNGs distributed in the release. Do not extract label values from JPEG colors.
+
+**DX1** — `TCGA-3L-AA1B-01Z-00-DX1.8923A151-A690-40B7-9E5A-FCBEDFC2394F`
+
+![Tissue atlas visualization for TCGA-3L-AA1B, diagnostic slide DX1](images/atlas-examples/tissue-map-coad-dx1.jpg)
+
+**DX2** — `TCGA-3L-AA1B-01Z-00-DX2.17CE3683-F4B1-4978-A281-8F620C4D77B4`
+
+![Tissue atlas visualization for TCGA-3L-AA1B, diagnostic slide DX2](images/atlas-examples/tissue-map-coad-dx2.jpg)
+
+Original visualization color scheme (for these examples; not a universal palette for every release or model output):
+
+![Original tissue atlas color scheme](images/atlas-examples/color-scheme.png)
+
+The original legend has a transparent background and is easiest to read on a light background. Category names are also listed in the table above. Source filenames and migration provenance are recorded in [the image notes](images/atlas-examples/README.md).
+
+### Reading label maps
+
 Read the stored indices without converting a palette image to RGB:
 
 ```python
@@ -121,6 +166,12 @@ print("Stored values:", np.unique(labels))
 
 When resizing categorical maps, use nearest-neighbor interpolation. Verify slide identity, map dimensions, scale, and origin before aligning maps with a WSI or with each other.
 
+### Interpretation and quality control
+
+- These maps are model predictions. The original project documentation notes confusion among fibrous stroma, muscle, and nerves in some slides; those three categories were merged for its TME analysis. Keep the stored categories intact unless your analysis explicitly calls for that grouping, and describe any grouping you apply.
+- Some slides have insufficient quality despite generally useful segmentation. Consult the paper's supplementary quality-control methods and the [slide information/QC workbook](CENTRAL/data/Slideinfo%20summary%20and%20QC.xlsx) when defining your analysis cohort.
+- The distributed 8 µm/pixel tissue maps are downsampled from the original 0.5 µm/pixel predictions. The original full-resolution TIFF maps are not included in these ZIP assets. For inquiries about full-resolution maps, contact **ping@nuist.edu.cn**; availability is not guaranteed by the current release.
+
 ## Precomputed tumor maps
 
 [Tumor-map release](https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas/releases/tag/tumor-maps) · [Download Tumor-Maps-for-8-cohorts.zip](https://github.com/Pinglab-NUIST/TCGA-Tissue-Atlas/releases/download/tumor-maps/Tumor-Maps-for-8-cohorts.zip) (approximately 256.3 MB).
@@ -134,6 +185,18 @@ One ZIP covers BRCA, COAD, LUAD, LUSC, OV, PAAD, STAD, and UCEC. The existing re
 | `2` | Tumor region in the foreground |
 
 For **LUAD and LUSC**, the notes explicitly document downsampling from **0.5 to 8.0 µm/pixel**. For **BRCA, COAD, OV, PAAD, STAD, and UCEC**, they document direct TIFF-to-PNG conversion but do not state a numerical pixel size. Do not assume all tumor maps have the same resolution as the tissue maps. Confirm the relevant spatial scale from the study materials before area measurements or image registration. The PNG loading example above also applies to these label maps.
+
+### Tumor-map examples and analysis context
+
+The following original heatmap overlays correspond to the same COAD slides shown above. They illustrate tumor localization and should not be interpreted as the stored `0/1/2` values of the current PNG assets.
+
+![Tumor localization overlay for TCGA-3L-AA1B, diagnostic slide DX1](images/atlas-examples/tumor-map-coad-dx1.jpg)
+
+![Tumor localization overlay for TCGA-3L-AA1B, diagnostic slide DX2](images/atlas-examples/tumor-map-coad-dx2.jpg)
+
+**Version distinction:** The original repository described a binary tumor mask (`1` = tumor, `0` = other). The current `tumor-maps` release instead documents `0` = excluded background, `1` = non-tumor foreground, and `2` = tumor foreground. Use `labels == 2` to select tumor in the current release; a nonzero-value test would also include non-tumor foreground.
+
+False positives and false negatives can occur. The original analysis applied pre-generated foreground masks and defined a main tumor region using connected components whose area exceeded **10% of the largest component's area**. This is historical analysis context, not a claim that every downloaded file has already undergone that postprocessing. Refer to the paper and supplementary methods before reproducing the selection.
 
 ## Supporting tables
 
