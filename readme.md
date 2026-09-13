@@ -30,6 +30,8 @@ The original pickle is distributed unchanged. It contains **3,437 TCGA case iden
 
 The stored names include 15 unsuffixed raw-count fields and 1,046 fields for each of `[inside-tumor]`, `[outside-tumor]`, `[invasive-margin-80]`, and `[invasive-margin-500]`. Preserve these names when selecting descriptors. See the paper and supplementary materials for biological definitions, formulas, and region construction; the file itself does not encode a full data dictionary or cohort labels.
 
+**What does `NOFEATURE` mean here?** It is a field-name prefix distinguishing the 1,031 fields excluded from the 3,168-descriptor selection. Their names include auxiliary/raw measurements such as `NOFEATURE_Raw_Count_TYPE_1`, tissue area/count fields, and intersection/ring area/count fields. They are retained in the original export for inspection; the prefix does **not** mean a missing value, an invalid case, or an all-zero column. The field names support this distinction, but the pickle does not provide a separate semantic definition for every auxiliary field. Use the ordered names and the prefix filter below rather than dropping columns by position.
+
 ### Load and select descriptors
 
 Requires Python and NumPy; loading and this selection were checked with Python 3.8.12 and NumPy 1.23.5. Only load pickle files from a trusted source, because unpickling can execute code.
